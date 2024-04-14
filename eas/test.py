@@ -1,5 +1,4 @@
 import csv
-
 def condense_csv(filename, id_name):
     with open(filename, 'r', encoding='utf-8') as data, open('condensed.csv', 'w', encoding='utf-8') as rec:
         text = csv.reader(data)
