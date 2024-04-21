@@ -1,16 +1,9 @@
 from zipfile import ZipFile
-def size_coverter(size):
-    count = 0
-    d = {0: 'B', 1: 'KB', 2: 'MB', 3: 'GB'}
-    while size / 1024 > 1:    
-        size /= 1024
-        count += 1
-    return f'{round(size)} {d[count]}'
-with ZipFile('desktop.zip') as file:
-    data = file.infolist()
-    for el in data:
-        seq = list(filter(lambda x: x != '' ,el.filename.split('/')))
-        if el.is_dir():
-            print(f"{'  ' * (len(seq) - 1)}{seq[-1]}")
-        else:
-            print(f"{'  ' * (len(seq) - 1)}{seq[-1]} {size_coverter(el.file_size)}")
+
+def hr_size(n, k = 0):
+    return f"{round(n)} {['B', 'KB', 'MB', 'GB', 'TB'][k]}" if n < 1024 else hr_size(n / 1024, k + 1)
+
+with ZipFile('desktop.zip') as z:
+    for i in z.infolist():
+        p = i.filename.strip('/').split('/')
+        print('  ' * (len(p) - 1) + p[-1] + ('' if i.is_dir() else ' ' + hr_size(i.file_size)))
