@@ -1,6 +1,4 @@
-from collections import Counter
-def cost(item):
-    return sum([ord(char) for char in item if char != ' '])
-data = Counter(input().split(','))
-for k, v in sorted(data.items()):
-    print(f'{k.ljust(len(max(data.keys(), key=len)))}: {cost(k)} UC x {v} = {cost(k) * v} UC')
+import csv, collections
+with open('name_log.csv', 'r', encoding='u8') as file:
+    [print(f'{t1}: {t2}') for t1, t2 in sorted(collections.Counter([el.strip().split(',')[1] for el in file.readlines()][1:]).most_common())]
+    
